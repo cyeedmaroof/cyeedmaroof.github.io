@@ -11,15 +11,16 @@
     "repo": "https://github.com/cyeedmaroof/SAIL-x-Baseline-Energy-Hackathon-2024",
     "case": {
       "problem": "Forecast short-term electricity consumption from real energy data for the UiS × Baseline Energy challenge — under hackathon time pressure, in a two-person team.",
-      "data": "Provided electricity-consumption time-series dataset from the challenge.",
-      "approach": "A hybrid pipeline: a CNN-LSTM feature extractor to capture temporal and spatial structure in the load signal, feeding XGBoost to sharpen the final regression. Delivered end-to-end — data prep → model → evaluation — with reproducible code and the dataset.",
-      "results": [
-        "Won 1st place at the UiS SAIL × Baseline Energy Hackathon 2024 (two-person team, \"3M\").",
-        "Combined deep temporal feature extraction with gradient boosting for the final forecast."
-      ],
-      "next": [
-        "Publish the winning error metric (RMSE / MAPE vs. baseline) and a predicted-vs-actual plot.",
-        "Add the leaderboard score for context."
+      "data": "Hourly electricity load paired with temperature — roughly 8,900 hours. I held out the final ~3 weeks as an untouched test set.",
+      "approach": "I framed this as hourly time-series regression: given the last 24 hours of load and weather, predict the next hour — then roll that forward to fill the two blanked validation days. The whole pipeline lives in cnn_lstm_with_xgb.py — I engineer features from the raw load-and-temperature signal (create_features()), slice the series into 24-hour supervised windows (create_sequences()), and train a CNN-LSTM with a custom attention layer to learn the temporal structure. Rather than let the network's own dense head make the final call, I peel off its learned representation and feed it into an XGBoost regressor — the CNN-LSTM → XGBoost hybrid that won the hackathon.",
+      "methods": [
+        { "method": "24-hour input windows", "ref": "create_sequences(data, sequence_length=24)", "why": "Each prediction sees the previous 24 hours, so the model always has a full daily cycle of load and temperature as context." },
+        { "method": "Cyclical + calendar time features", "ref": "hour_sin/cos, day_of_week_sin/cos, is_weekend", "why": "Demand is strongly periodic. Sine/cosine encodings let the model treat hour 23 and hour 0 — or Sunday and Monday — as neighbours instead of far-apart numbers, while the calendar flags give it weekday context." },
+        { "method": "Lag and rolling-window features", "ref": "load_lag_1h, load_lag_24h, load_rolling_mean_24h", "why": "Load is autoregressive — the previous hour and the same hour yesterday are strong predictors — and 24-hour rolling means smooth out noise to expose the underlying trend." },
+        { "method": "Temperature and temperature-squared", "ref": "df['Temp2'] = Temperature ** 2", "why": "Both heating and cooling push demand up, so load versus temperature is U-shaped; the squared term lets the model capture that non-linear relationship." },
+        { "method": "CNN → LSTM → attention stack", "ref": "Conv1D → LSTM(64) → AttentionLayer", "why": "The 1-D CNN extracts short local patterns (like the morning ramp-up) and compresses the window; the LSTM models longer-range dependencies across the day; and a custom attention layer weights the most informative hours instead of treating all 24 equally." },
+        { "method": "Network as feature extractor, then XGBoost", "ref": "lstm_feature_extractor → XGBRegressor", "why": "I used the trained network to produce a learned representation and let XGBoost make the final prediction. Gradient boosting is very strong on tabular features, so it sharpens the regression beyond the network's own dense head." },
+        { "method": "Scaling, regularisation and optimisation", "ref": "MinMaxScaler · Dropout · BatchNormalization · Adam · ReduceLROnPlateau", "why": "MinMax scaling keeps the 13 features comparable; dropout and batch-norm curb overfitting; and Adam with learning-rate scheduling plus early stopping keeps training stable and ends it at the right time." }
       ]
     }
   },
@@ -29,20 +30,20 @@
     "domain": "GenAI · Knowledge graphs",
     "year": "2025",
     "featured": true,
-    "summary": "An LLM agent that answers medical-emergency queries via retrieval over a property-graph knowledge store and call transcripts.",
-    "tech": ["Python", "RAG", "Knowledge graph", "Vector store", "LLM agent", "Gradio"],
+    "summary": "A GraphRAG agent that answers medical-emergency queries over a property-graph knowledge store built from call transcripts.",
+    "tech": ["Python", "GraphRAG", "Knowledge graph", "LlamaIndex", "LangGraph", "Gradio"],
     "repo": "https://github.com/cyeedmaroof/Medical-emergency-agent",
     "case": {
-      "problem": "Answer medical-emergency questions reliably, grounding the LLM in real call-transcript data rather than letting it hallucinate.",
-      "data": "A call-transcript corpus plus a property-graph knowledge store and a vector store for retrieval.",
-      "approach": "Retrieval-augmented generation over the knowledge graph and vector store, orchestrated as an LLM agent, with an interactive Gradio UI. Packaged as a reproducible Poetry project with a src/ layout.",
-      "results": [
-        "A working agent that queries a knowledge graph + vector store and answers through a Gradio interface.",
-        "Uses the modern GenAI stack — knowledge graphs, RAG, and agent orchestration — not just prompting."
-      ],
-      "next": [
-        "Document the use case, data provenance and privacy note, and add an architecture diagram.",
-        "Add a screenshot / GIF of the UI answering a query and a retrieval-accuracy metric."
+      "problem": "Answer medical-emergency questions reliably by grounding an LLM in real call-transcript data and a medical knowledge graph, rather than letting it hallucinate.",
+      "data": "A corpus of emergency call transcripts, from which I build a property-graph knowledge store plus a vector index for retrieval.",
+      "approach": "This is a GraphRAG system, not a plain chatbot. I extract a medical property graph from the transcripts (PGExtractor.py, dynamicKG_builder.py), index it alongside a vector store, and orchestrate retrieve → reason → answer as an explicit LangGraph flow (graphflow.py). The LLM only answers over what's retrieved from both the graph and the vectors, and a Gradio UI makes it queryable. Built as a Poetry project on LlamaIndex + LangChain/LangGraph.",
+      "methods": [
+        { "method": "Property-graph knowledge store", "ref": "PGExtractor.py, dynamicKG_builder.py", "why": "I extract entities and relationships from the transcripts into a property graph, so the agent can reason over structured medical connections rather than loose text." },
+        { "method": "Hybrid graph + vector retrieval", "ref": "retriever.py, langchain-chroma, vector store", "why": "Vector search finds semantically similar passages while the knowledge graph supplies precise, connected facts — together they ground answers far better than either alone." },
+        { "method": "LangGraph orchestration", "ref": "graphflow.py / graphflow_v2.py (langgraph)", "why": "Modelling retrieve → reason → answer as an explicit state graph makes the agent controllable and inspectable instead of a black-box prompt chain." },
+        { "method": "Standalone vs. transcript-grounded querying", "ref": "Stand_alone_queries.ipynb, query_with_call_transcripts_test.ipynb", "why": "I compared answering from the graph alone against answering grounded in the call transcripts to see which gave more reliable, less hallucinated responses." },
+        { "method": "Domain-specific extraction prompts", "ref": "medical_kg_prompt.py", "why": "Tailored prompts pull the right medical entities and relations out of messy transcript text, which is what makes the graph useful." },
+        { "method": "Interactive Gradio UI + reproducible packaging", "ref": "Gradio · pyproject.toml (Poetry, Python 3.10–3.12)", "why": "A query box makes it usable by non-technical people, and a pinned LlamaIndex/LangChain environment rebuilds cleanly." }
       ]
     }
   },
@@ -53,19 +54,18 @@
     "year": "2024",
     "featured": true,
     "summary": "A Deep Q-Network agent that learns to play Atari Breakout from pixels, built as a clean, modular, reproducible codebase.",
-    "tech": ["Python", "Deep Q-Network", "Reinforcement learning"],
+    "tech": ["Python", "Deep Q-Network", "TensorFlow", "Gymnasium"],
     "repo": "https://github.com/cyeedmaroof/Atari_breakout_with_DQN",
     "case": {
       "problem": "Train an agent to play Atari Breakout from raw pixel input using value-based reinforcement learning.",
-      "data": "The Atari Breakout environment (pixel frames as state).",
-      "approach": "A Deep Q-Network implemented from the ground up, structured as software rather than a single notebook — config-driven training, saved model checkpoints, and a standalone evaluation/inference script.",
-      "results": [
-        "A trained DQN agent on Breakout with a modular, reproducible codebase (config, models, utils).",
-        "Separate training and evaluation entry points with pinned dependencies."
-      ],
-      "next": [
-        "Fix the README (problem → approach → how to train/run).",
-        "Add a learning-curve plot and a GIF of the trained agent playing."
+      "data": "The Atari Breakout environment — stacked game frames as the agent's state.",
+      "approach": "I implemented a Deep Q-Network from the ground up and structured it as a proper codebase rather than one notebook: a CNN-LSTM Q-network (model.py), the agent and its learning loop (agent.py, train.py), the environment setup (environment.py), a central config (config/config.py), and a separate script to load and evaluate a trained agent (load_and_test_model.py).",
+      "methods": [
+        { "method": "CNN-LSTM Q-network", "ref": "model.py", "why": "A convolutional stack reads the frames and an LSTM adds memory across them, so the agent can perceive motion — the ball's direction and speed — not just a single static image." },
+        { "method": "Deep Q-learning agent", "ref": "agent.py, train.py", "why": "Value-based RL lets the agent learn purely by playing and improving its action-values, with no labelled data." },
+        { "method": "Gymnasium Atari environment", "ref": "environment.py (Gymnasium + Atari)", "why": "A standard, reproducible Breakout environment with frame preprocessing, so runs are comparable and easy to reproduce." },
+        { "method": "Config-driven training", "ref": "config/config.py, main.py", "why": "All hyperparameters live in one place, so experiments are repeatable and easy to tweak without touching the training code." },
+        { "method": "Decoupled evaluation + checkpoints", "ref": "load_and_test_model.py, breakout_dqn_cnn_lstm.h5", "why": "Training and inference are separated and weights are saved, so a trained agent can be reloaded and played back without retraining." }
       ]
     }
   },
@@ -79,16 +79,60 @@
     "tech": ["Python", "LangGraph", "LangChain", "Pydantic"],
     "repo": "https://github.com/cyeedmaroof/ECIU_AI_Hackathon",
     "case": {
-      "problem": "Model an interview-and-document-retrieval process as a controllable, inspectable LLM workflow.",
-      "data": "Interview prompts and a document corpus for retrieval.",
-      "approach": "A LangGraph StateGraph with explicit nodes (greet, answer, retrieve) and conditional edges, using LangChain and Pydantic for structured node logic, with the compiled graph visualized.",
-      "results": [
-        "A compiled state-graph agent demonstrating controllable orchestration, not just prompting.",
-        "Structured, typed node logic with LangChain + Pydantic."
-      ],
-      "next": [
-        "Add a README framing the hackathon goal and a diagram of the graph.",
-        "Note whether the entry was ranked or awarded."
+      "problem": "Model an interview-and-document-retrieval process as a controllable LLM workflow, rather than a single free-form prompt.",
+      "data": "Interview prompts plus a document corpus the agent retrieves from.",
+      "approach": "Built in ECIU_Hackathon.ipynb as an explicit LangGraph StateGraph: I define nodes for greeting, answering and retrieval, wire them with conditional edges, compile the graph and visualise it. LangChain drives the LLM calls and Pydantic types the state passed between nodes.",
+      "methods": [
+        { "method": "Explicit StateGraph", "ref": "StateGraph (langgraph)", "why": "Representing the flow as nodes and edges makes the agent's control flow visible and debuggable, instead of hidden inside one prompt." },
+        { "method": "Typed graph state", "ref": "pydantic models", "why": "Pydantic enforces the shape of the state moving between nodes, so the graph fails loudly on bad data rather than silently misbehaving." },
+        { "method": "Conditional routing", "ref": "greet / answer / retrieve nodes + edges", "why": "Conditional edges let the agent branch — e.g. retrieve documents only when a question needs grounding — instead of running every step every time." },
+        { "method": "Graph visualisation", "ref": "compiled graph render (PIL)", "why": "Drawing the compiled graph makes the design self-documenting and easy to explain." }
+      ]
+    }
+  },
+  {
+    "slug": "hack-the-climate-stavanger",
+    "title": "Hack the Climate — Team Continua",
+    "domain": "Environmental ML · GIS",
+    "year": "2024",
+    "featured": false,
+    "team": true,
+    "credit": "Team project · Team Continua, Nordic Edge",
+    "summary": "A 5-person team forecasting agricultural nutrient runoff to fight water pollution in the Stavanger–Setesdal region.",
+    "tech": ["Python", "LSTM", "DDPG", "FastAPI", "AWS", "GIS"],
+    "repo": "https://github.com/achak1987/thc_stavanger",
+    "case": {
+      "problem": "Reduce water pollution in the Stavanger–Setesdal region by predicting nutrient runoff from agricultural areas — the Nordic Edge \"Hack the Climate\" challenge, tackled by the 5-person Team Continua.",
+      "data": "Environmental and geographic data for the region.",
+      "approach": "The team paired forecasting with geographic context: LSTM models to predict nutrient runoff over time, DDPG (a continuous-action RL method) to explore interventions, and a FastAPI service on AWS to serve it all, with GIS tying predictions to the map. Built in collaboration with local authorities and the Nordic Edge team.",
+      "methods": [
+        { "method": "LSTM runoff forecasting", "ref": "LSTM sequence models (Jupyter)", "why": "Runoff is a time series driven by weather and land use, so a recurrent model captures how conditions build up over time toward pollution events." },
+        { "method": "DDPG for intervention search", "ref": "DDPG (deep RL)", "why": "A continuous-action RL method lets us explore what interventions reduce runoff, not just predict it." },
+        { "method": "GIS integration", "ref": "geographic data layers", "why": "Pollution is inherently spatial — tying predictions to the map makes them actionable for local authorities." },
+        { "method": "FastAPI service on AWS", "ref": "FastAPI + AWS", "why": "Serving the models behind a simple API let the wider Nordic Edge team consume the monitoring solution." }
+      ]
+    }
+  },
+  {
+    "slug": "spark-optimization-dat500",
+    "title": "Optimizing Apache Spark at Scale",
+    "domain": "Distributed data · Spark",
+    "year": "2023",
+    "featured": false,
+    "team": true,
+    "credit": "Team project · Data-Intensive Systems (DAT500), UiS",
+    "summary": "A team study of Hadoop/Spark optimizations on the Yelp reviews dataset for UiS's Data-Intensive Systems course.",
+    "tech": ["Apache Spark", "Hadoop", "PySpark", "Distributed computing"],
+    "repo": "https://github.com/MattthiasSchedel/DIS_Project_Documentation",
+    "case": {
+      "problem": "Learn and apply Hadoop and Apache Spark for distributed analytics, then optimise Spark operations to save time and energy — a project for UiS's Data-Intensive Systems (DAT500) course.",
+      "data": "The public Yelp reviews dataset, used as a large sample workload on a Hadoop/Spark cluster.",
+      "approach": "The team implemented a correct baseline Spark job first, then applied and benchmarked optimisations one at a time — caching, cluster configuration, and code-level changes — measuring each against the baseline. The full method and evaluation are written up in the report.",
+      "methods": [
+        { "method": "Baseline-first benchmarking", "ref": "PySpark job on Yelp reviews", "why": "Establishing a correct, unoptimised implementation first means every optimisation can be measured against a fair reference." },
+        { "method": "Well-timed caching", "ref": "Spark cache / persist of reused data", "why": "Caching DataFrames that are reused avoids recomputation — the biggest single win in our report, roughly halving execution time." },
+        { "method": "Cluster-configuration tuning", "ref": "executor & partition settings", "why": "Right-sizing executors and partitions keeps the cluster busy without shuffling more data than necessary." },
+        { "method": "Code-execution optimisation", "ref": "narrow vs. wide transformations", "why": "Restructuring transformations to minimise shuffles and wide dependencies cuts the most expensive stages of the job." }
       ]
     }
   },
@@ -103,14 +147,12 @@
     "repo": "https://github.com/cyeedmaroof/the-spark-foundation-IPL-analysis",
     "case": {
       "problem": "Make IPL cricket data explorable through an interactive dashboard (a Sparks Foundation internship task).",
-      "data": "IPL matches and ball-by-ball delivery data, 2008–2019.",
-      "approach": "An R Shiny app with interactive filtering and exploratory visualizations over the matches and deliveries datasets.",
-      "results": [
-        "An interactive dashboard covering IPL matches and ball-by-ball data across 2008–2019.",
-        "Evidence of R + Shiny + dashboarding breadth."
-      ],
-      "next": [
-        "Add screenshots and two or three concrete insights the dashboard surfaces."
+      "data": "IPL matches (matches.csv) and ball-by-ball deliveries (deliveries.csv), 2008–2019.",
+      "approach": "Built in app.R as an R Shiny application over the two datasets, with a reactive UI that filters and visualises the data so patterns across seasons, teams and players can be explored interactively.",
+      "methods": [
+        { "method": "R Shiny reactive app", "ref": "app.R", "why": "Shiny's reactive model updates the charts instantly as filters change, making the data explorable rather than a static report." },
+        { "method": "Two-grain data model", "ref": "matches.csv + deliveries.csv", "why": "Combining match-level and ball-by-ball data lets the dashboard answer both season-level trends and fine-grained per-over questions." },
+        { "method": "Exploratory visualisations", "ref": "Shiny render plots", "why": "Charts across teams, seasons and players surface patterns that a raw table can't." }
       ]
     }
   }

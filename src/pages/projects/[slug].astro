@@ -27,6 +27,7 @@ const c = project.case;
       <div class="study-meta">
         <span>{project.year}</span>
         {project.award && <span>★ {project.award}</span>}
+        {project.credit && <span>{project.credit}</span>}
         <a href={project.repo}>Repository ↗</a>
       </div>
     </header>
@@ -47,23 +48,101 @@ const c = project.case;
         <p>{c.approach}</p>
       </div>
 
-      <div class="study-block">
-        <h2>Results</h2>
-        <ul class="study-list">
-          {c.results.map((r) => <li>{r}</li>)}
-        </ul>
-      </div>
+      {
+        project.media && (
+          <div class="study-block">
+            <h2>Demo</h2>
+            <div class="demo-embed">
+              {project.media.endsWith(".mp4") || project.media.endsWith(".webm") ? (
+                <video src={project.media} autoplay loop muted playsinline class="media-el" />
+              ) : (
+                <img src={project.media} alt={`${project.title} demo`} class="media-el" />
+              )}
+            </div>
+          </div>
+        )
+      }
 
-      <div class="study-block">
-        <h2>What's next</h2>
-        <ul class="study-list">
-          {c.next.map((n) => <li>{n}</li>)}
-        </ul>
-        <p class="callout" style="margin-top:1rem;">
-          This is a living case study — result figures and metrics are being
-          added as the repositories are polished.
-        </p>
-      </div>
+      {
+        c.built && (
+          <div class="study-block">
+            <h2>What I built</h2>
+            <ul class="study-list">
+              {c.built.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      {
+        c.methods && (
+          <div class="study-block">
+            <h2>Methods &amp; why</h2>
+            <div class="methods">
+              {c.methods.map((m) => (
+                <div class="method">
+                  <p class="method-name">
+                    {m.method}
+                    {m.ref && <code class="method-ref">{m.ref}</code>}
+                  </p>
+                  <p class="method-why">{m.why}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      {
+        c.results && (
+          <div class="study-block">
+            <h2>Results</h2>
+            <ul class="study-list">
+              {c.results.map((r) => (
+                <li>{r}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      {
+        project.demo && (
+          <div class="study-block">
+            <h2>Live demo</h2>
+            <div class="demo-embed">
+              <iframe
+                src={project.demo}
+                title={`${project.title} — live demo`}
+                loading="lazy"
+                allow="fullscreen"
+              />
+            </div>
+            <p class="back-link" style="margin-top:0.6rem;">
+              Hosted on Hugging Face Spaces · <a href={project.demo}>open in a new tab ↗</a>
+            </p>
+          </div>
+        )
+      }
+
+      {
+        c.next && (
+          <div class="study-block">
+            <h2>What's next</h2>
+            <ul class="study-list">
+              {c.next.map((n) => (
+                <li>{n}</li>
+              ))}
+            </ul>
+            <p class="callout" style="margin-top:1rem;">
+              This is a living case study — result figures and metrics are being
+              added as the repositories are polished.
+            </p>
+          </div>
+        )
+      }
 
       <div class="study-block">
         <h2>Tech</h2>

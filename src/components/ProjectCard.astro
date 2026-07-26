@@ -6,6 +6,8 @@ interface Project {
   summary: string;
   tech: string[];
   award?: string;
+  team?: boolean;
+  credit?: string;
 }
 interface Props {
   project: Project;
@@ -16,12 +18,19 @@ const { project } = Astro.props;
 <article class="card">
   <div class="card-top">
     <p class="eyebrow">{project.domain}</p>
-    {project.award && <span class="badge badge-award">★ {project.award}</span>}
+    {
+      project.award ? (
+        <span class="badge badge-award">★ {project.award}</span>
+      ) : (
+        project.team && <span class="badge badge-role">Team</span>
+      )
+    }
   </div>
   <h3 class="card-title">
     <a class="card-link" href={`/projects/${project.slug}`}>{project.title}</a>
   </h3>
   <p class="card-summary">{project.summary}</p>
+  {project.credit && <p class="card-credit">{project.credit}</p>}
   <ul class="tags">
     {project.tech.slice(0, 4).map((t) => <li class="tag">{t}</li>)}
   </ul>

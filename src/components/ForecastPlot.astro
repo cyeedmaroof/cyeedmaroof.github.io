@@ -1,48 +1,56 @@
 ---
-// Signature element: an abstract measured-vs-forecast signal.
-// Illustrative only — no real data or numeric claims are shown.
+// Signature element: an abstract measured-vs-forecast signal, framed as
+// terminal output. Illustrative only — no real data or numeric claims are shown.
 ---
 
-<svg
-  class="plot hero-plot"
-  viewBox="0 0 640 380"
-  role="img"
-  aria-label="An illustrative chart: a measured signal line crossing a 'now' boundary into a dashed forecast with a confidence band."
->
-  <!-- plotting grid -->
-  <g class="axis">
-    <line x1="0" y1="95" x2="640" y2="95"></line>
-    <line x1="0" y1="190" x2="640" y2="190"></line>
-    <line x1="0" y1="285" x2="640" y2="285"></line>
-    <line x1="160" y1="30" x2="160" y2="350"></line>
-    <line x1="320" y1="30" x2="320" y2="350"></line>
-    <line x1="480" y1="30" x2="480" y2="350"></line>
-  </g>
+<div class="term">
+  <div class="term-bar" aria-hidden="true">
+    <span class="term-dot c"></span>
+    <span class="term-dot a"></span>
+    <span class="term-dot m"></span>
+    <span class="term-title">forecast.py — python</span>
+  </div>
+  <svg
+    class="plot"
+    viewBox="0 0 640 380"
+    role="img"
+    aria-label="An illustrative chart: a measured signal line crossing a 'now' boundary into a dashed forecast with a confidence band."
+  >
+    <!-- plotting grid -->
+    <g class="axis">
+      <line x1="0" y1="95" x2="640" y2="95"></line>
+      <line x1="0" y1="190" x2="640" y2="190"></line>
+      <line x1="0" y1="285" x2="640" y2="285"></line>
+      <line x1="160" y1="30" x2="160" y2="350"></line>
+      <line x1="320" y1="30" x2="320" y2="350"></line>
+      <line x1="480" y1="30" x2="480" y2="350"></line>
+    </g>
 
-  <!-- forecast confidence band -->
-  <path
-    class="band"
-    d="M 400,120 L 440,100 L 480,128 L 520,104 L 560,132 L 600,108 L 640,134
-       L 640,182 L 600,156 L 560,180 L 520,152 L 480,176 L 440,148 L 400,168 Z"
-  ></path>
+    <!-- forecast confidence band -->
+    <path
+      class="band"
+      d="M 400,120 L 440,100 L 480,128 L 520,104 L 560,132 L 600,108 L 640,134
+         L 640,182 L 600,156 L 560,180 L 520,152 L 480,176 L 440,148 L 400,168 Z"
+    ></path>
 
-  <!-- 'now' boundary -->
-  <line class="now-line" x1="400" y1="40" x2="400" y2="345"></line>
-  <text class="label" x="408" y="54">now</text>
-  <text class="label" x="16" y="345">measured</text>
-  <text class="label" x="500" y="345">forecast</text>
+    <!-- 'now' boundary -->
+    <line class="now-line" x1="400" y1="40" x2="400" y2="345"></line>
+    <text class="label" x="408" y="54">now</text>
+    <text class="label" x="16" y="345">measured</text>
+    <text class="label" x="500" y="345">forecast</text>
 
-  <!-- measured signal -->
-  <path
-    class="measured"
-    d="M 0,196 L 40,150 L 80,172 L 120,120 L 160,152 L 200,110 L 240,142 L 280,102 L 320,132 L 360,96 L 400,144"
-  ></path>
+    <!-- measured signal -->
+    <path
+      class="measured"
+      d="M 0,196 L 40,150 L 80,172 L 120,120 L 160,152 L 200,110 L 240,142 L 280,102 L 320,132 L 360,96 L 400,144"
+    ></path>
 
-  <!-- forecast continuation -->
-  <path
-    class="forecast"
-    d="M 400,144 L 440,124 L 480,152 L 520,128 L 560,156 L 600,132 L 640,158"
-  ></path>
+    <!-- forecast continuation -->
+    <path
+      class="forecast"
+      d="M 400,144 L 440,124 L 480,152 L 520,128 L 560,156 L 600,132 L 640,158"
+    ></path>
 
-  <circle class="dot" cx="400" cy="144" r="4.5"></circle>
-</svg>
+    <circle class="dot" cx="400" cy="144" r="4.5"></circle>
+  </svg>
+</div>

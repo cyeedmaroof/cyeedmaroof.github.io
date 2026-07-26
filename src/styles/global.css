@@ -1,21 +1,24 @@
 /* ============================================================
-   Forecast — design system
+   Forecast / Terminal — dark design system
    Space Grotesk (display) · IBM Plex Sans (body) · IBM Plex Mono (data)
+   Concept: a terminal session. Deep charcoal, cyan+amber accents,
+   prompt eyebrows, blinking cursor, forecast plot as terminal output.
    ============================================================ */
 
 :root {
-  /* palette */
-  --paper: #f3f5f8;
-  --surface: #ffffff;
-  --ink: #0f1b2d;
-  --slate: #55647a;
-  --grid: #dce3ec;
-  --indigo: #2457d6;
-  --indigo-ink: #1b44ab;
-  --teal: #0fa79a;
-  --amber: #e8a020;
-  --ink-6: rgba(15, 27, 45, 0.06);
-  --ink-10: rgba(15, 27, 45, 0.1);
+  /* palette — dark */
+  --paper: #0d1219;      /* app background */
+  --surface: #131b25;    /* cards, terminal body */
+  --surface-2: #0a0f16;  /* terminal title bar, deeper wells */
+  --ink: #e6edf3;        /* primary text */
+  --slate: #8b97a7;      /* secondary text */
+  --grid: #24303d;       /* borders, plot grid */
+  --indigo: #4fd6c9;     /* primary accent (cyan) */
+  --indigo-ink: #79e5da; /* lighter cyan for hover/links on dark */
+  --teal: #6fe0a8;       /* soft green — list markers */
+  --amber: #f2b45c;      /* highlight + forecast line */
+  --ink-6: rgba(230, 237, 243, 0.05);
+  --ink-10: rgba(230, 237, 243, 0.12);
 
   /* type */
   --font-display: "Space Grotesk", system-ui, sans-serif;
@@ -28,6 +31,8 @@
   --section-y: clamp(4rem, 9vw, 7rem);
   --radius: 14px;
   --radius-sm: 9px;
+
+  color-scheme: dark;
 }
 
 /* ---------- reset / base ---------- */
@@ -108,14 +113,20 @@ ul {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--indigo);
   margin: 0;
 }
 
+.eyebrow::before {
+  content: "❯ ";
+  color: var(--indigo);
+  opacity: 0.85;
+}
+
 .section-head {
-  max-width: 44ch;
+  max-width: 46ch;
   margin-bottom: clamp(2rem, 4vw, 3rem);
 }
 
@@ -128,6 +139,34 @@ ul {
   color: var(--slate);
   font-size: 1.1rem;
   margin-top: 0.75rem;
+}
+
+/* blinking terminal cursor */
+.cursor {
+  display: inline-block;
+  width: 0.6ch;
+  height: 0.95em;
+  background: var(--indigo);
+  margin-left: 0.14em;
+  transform: translateY(0.1em);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
 }
 
 /* ---------- buttons ---------- */
@@ -152,7 +191,8 @@ ul {
 
 .btn-primary {
   background: var(--indigo);
-  color: #fff;
+  color: #06131a;
+  font-weight: 500;
 }
 
 .btn-primary:hover {
@@ -175,7 +215,7 @@ ul {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
   backdrop-filter: saturate(1.4) blur(10px);
   border-bottom: 1px solid var(--ink-6);
 }
@@ -227,7 +267,7 @@ ul {
 }
 
 .nav-links a[aria-current="page"] {
-  color: var(--ink);
+  color: var(--indigo-ink);
 }
 
 .nav-cv {
@@ -284,14 +324,54 @@ ul {
   color: var(--indigo-ink);
 }
 
-/* ---------- forecast plot (signature) ---------- */
+/* ---------- terminal window (wraps the forecast plot) ---------- */
+.term {
+  border: 1px solid var(--grid);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 26px 60px -34px rgba(0, 0, 0, 0.75);
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--grid);
+}
+
+.term-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.term-dot.c {
+  background: var(--indigo);
+}
+.term-dot.a {
+  background: var(--amber);
+}
+.term-dot.m {
+  background: var(--slate);
+  opacity: 0.5;
+}
+
+.term-title {
+  margin-left: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--slate);
+}
+
+/* ---------- forecast plot ---------- */
 .plot {
   width: 100%;
   height: auto;
-  border-radius: var(--radius);
+  display: block;
   background: var(--surface);
-  border: 1px solid var(--grid);
-  box-shadow: 0 24px 48px -32px rgba(15, 27, 45, 0.35);
 }
 
 .plot .axis {
@@ -306,8 +386,8 @@ ul {
 }
 
 .plot .band {
-  fill: var(--teal);
-  opacity: 0.1;
+  fill: var(--amber);
+  opacity: 0.12;
 }
 
 .plot .measured {
@@ -320,7 +400,7 @@ ul {
 
 .plot .forecast {
   fill: none;
-  stroke: var(--teal);
+  stroke: var(--amber);
   stroke-width: 2.6;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -373,7 +453,7 @@ ul {
 
 @keyframes band-in {
   to {
-    opacity: 0.1;
+    opacity: 0.12;
   }
 }
 
@@ -398,18 +478,18 @@ ul {
 
 .card:hover {
   transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--indigo) 40%, var(--grid));
-  box-shadow: 0 22px 40px -30px rgba(15, 27, 45, 0.45);
+  border-color: color-mix(in srgb, var(--indigo) 55%, var(--grid));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--indigo) 35%, transparent),
+    0 20px 40px -30px rgba(0, 0, 0, 0.8);
 }
 
 .card:hover .card-title {
-  text-decoration: underline;
-  text-decoration-color: var(--indigo);
+  color: var(--indigo-ink);
 }
 
 .card-top {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
 }
@@ -422,6 +502,14 @@ ul {
   color: var(--ink);
 }
 
+.card-link {
+  color: inherit;
+}
+
+.card-link:hover {
+  text-decoration: none;
+}
+
 .card-link::after {
   content: "";
   position: absolute;
@@ -431,6 +519,12 @@ ul {
 .card-summary {
   color: var(--slate);
   font-size: 0.98rem;
+}
+
+.card-credit {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--slate);
 }
 
 .badge {
@@ -448,7 +542,12 @@ ul {
 
 .badge-award {
   background: color-mix(in srgb, var(--amber) 18%, transparent);
-  color: #8a5a00;
+  color: var(--amber);
+}
+
+.badge-role {
+  background: color-mix(in srgb, var(--indigo) 15%, transparent);
+  color: var(--indigo-ink);
 }
 
 .tags {
@@ -538,6 +637,71 @@ ul {
   font-size: 0.95rem;
 }
 
+.methods {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.method-name {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.7rem;
+  margin: 0;
+}
+
+.method-name::before {
+  content: "▹";
+  color: var(--indigo);
+}
+
+.method-ref {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--indigo-ink);
+  background: color-mix(in srgb, var(--indigo) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--indigo) 25%, transparent);
+  padding: 0.08rem 0.45rem;
+  border-radius: 6px;
+}
+
+.method-why {
+  color: var(--slate);
+  font-size: 0.97rem;
+  margin-top: 0.3rem;
+  max-width: 68ch;
+}
+
+.demo-embed {
+  border: 1px solid var(--grid);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.demo-embed iframe {
+  display: block;
+  width: 100%;
+  height: 640px;
+  border: 0;
+}
+
+.media-el {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 560px) {
+  .demo-embed iframe {
+    height: 520px;
+  }
+}
+
 .back-link {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -589,6 +753,12 @@ ul {
   border-radius: var(--radius-sm);
 }
 
+a.chip:hover {
+  border-color: var(--indigo);
+  color: var(--indigo-ink);
+  text-decoration: none;
+}
+
 /* generic item rows (certificates / events) */
 .item-list {
   display: grid;
@@ -636,7 +806,7 @@ ul {
   border: 1.5px dashed var(--ink-10);
   border-radius: var(--radius);
   padding: clamp(2rem, 5vw, 3.5rem);
-  background: color-mix(in srgb, var(--surface) 60%, transparent);
+  background: var(--surface);
   max-width: 640px;
 }
 
@@ -654,6 +824,7 @@ ul {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   background: var(--ink-6);
+  color: var(--indigo-ink);
   padding: 0.1rem 0.4rem;
   border-radius: 4px;
 }
@@ -696,7 +867,7 @@ ul {
   .split {
     grid-template-columns: 1fr;
   }
-  .hero-plot {
+  .hero-plot-wrap {
     order: -1;
   }
 }
