@@ -6,38 +6,50 @@ import events from "../data/events.json";
 
 <Layout
   title={`Events — ${profile.name}`}
-  description="Talks, meetups, and community events hosted or organized."
+  description="Music, culture and social events founded and organized by Maroof Mushtaq."
 >
   <section class="section wrap">
     <div class="section-head">
       <p class="eyebrow">Community</p>
       <h2>Events I've hosted</h2>
       <p class="lead">
-        Meetups, talks, and events I've organized or hosted.
+        Beyond the code — music, culture and social events I've founded and organised.
       </p>
     </div>
 
     {
       events.length > 0 ? (
-        <div class="item-list">
+        <div class="events">
           {events.map((ev) => (
-            <div class="item">
-              <span class="item-date">{ev.date}</span>
-              <div>
-                <h3>{ev.url ? <a href={ev.url}>{ev.name} ↗</a> : ev.name}</h3>
-                <p class="item-sub">{ev.role}</p>
-                {ev.description && <p class="item-desc">{ev.description}</p>}
+            <article class="event">
+              <div class="event-head">
+                <h3>{ev.name}</h3>
+                {ev.role && <p class="event-role">{ev.role}</p>}
+                {ev.description && <p class="event-desc">{ev.description}</p>}
               </div>
-            </div>
+              {ev.embeds && ev.embeds.length > 0 && (
+                <div class="embed-grid">
+                  {ev.embeds.map((code) => (
+                    <iframe
+                      class="ig-embed"
+                      src={`https://www.instagram.com/p/${code}/embed`}
+                      loading="lazy"
+                      scrolling="no"
+                      title={`${ev.name} — Instagram post`}
+                    />
+                  ))}
+                </div>
+              )}
+            </article>
           ))}
         </div>
       ) : (
         <div class="empty">
           <h3>No events added yet</h3>
           <p>
-            Add entries to <code>src/data/events.json</code> — each needs
-            <code>name</code>, <code>role</code>, <code>date</code>, and an
-            optional <code>description</code> and <code>url</code>.
+            Add entries to <code>src/data/events.json</code> — each needs a
+            <code>name</code>, <code>role</code>, <code>description</code>, and an
+            optional <code>embeds</code> array of Instagram post shortcodes.
           </p>
         </div>
       )

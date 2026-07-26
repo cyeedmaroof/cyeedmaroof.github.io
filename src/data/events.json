@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "name": "Efimero",
+    "role": "Founder",
+    "description": "A collective for experimental and club electronic music by local artists. I started it to bring electronic music to students, then grew it beyond campus — our first off-campus event was at Folken, and we've hosted three events since.",
+    "embeds": ["DRSIV7ODSyw"]
+  },
+  {
+    "name": "International Students Union (ISU)",
+    "role": "Directorate of Academics & Social Affairs",
+    "description": "Part of the ISU directorate for academics and social affairs, helping organise and host social events for international students.",
+    "embeds": ["CseaWg_saFC", "Cwlj-NfqyOR"]
+  }
+]
