@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import profile from "../../data/profile.json";
+import projects from "../../data/projects.json";
+---
+
+<Layout
+  title={`Projects — ${profile.name}`}
+  description="Data science and machine-learning projects: energy forecasting, GenAI agents, reinforcement learning, and dashboards."
+>
+  <section class="section wrap">
+    <div class="section-head">
+      <p class="eyebrow">Projects</p>
+      <h2>Case studies</h2>
+      <p class="lead">
+        Real work, honestly framed — problem, data, approach, and what I'd do
+        next. Metrics still being gathered are flagged, never invented.
+      </p>
+    </div>
+    <div class="card-grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,89 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ForecastPlot from "../components/ForecastPlot.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import profile from "../data/profile.json";
+import projects from "../data/projects.json";
+
+const featured = projects.filter((p) => p.featured);
+---
+
+<Layout
+  title={`${profile.name} — ${profile.roles}`}
+  description={profile.positioning}
+>
+  <!-- hero -->
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Data Scientist · {profile.location}</p>
+        <h1>{profile.positioning}</h1>
+        <p class="hero-tagline">{profile.tagline}</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="/projects">View projects</a>
+          <a class="btn btn-ghost" href={profile.cv}>Download CV ↓</a>
+        </div>
+        <div class="hero-meta">
+          <a href={profile.links.github}>GitHub ↗</a>
+          <a href={profile.links.linkedin}>LinkedIn ↗</a>
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        </div>
+      </div>
+      <div class="hero-plot-wrap">
+        <ForecastPlot />
+      </div>
+    </div>
+  </section>
+
+  <!-- featured work -->
+  <section class="section wrap">
+    <div class="section-head">
+      <p class="eyebrow">Selected work</p>
+      <h2>Three projects that show the range</h2>
+      <p class="lead">
+        A first-place energy forecaster, a knowledge-graph GenAI agent, and a
+        reinforcement-learning agent — each with a short case study.
+      </p>
+    </div>
+    <div class="card-grid">
+      {featured.map((project) => <ProjectCard project={project} />)}
+    </div>
+    <p style="margin-top:2rem;font-family:var(--font-mono);font-size:0.85rem;">
+      <a href="/projects">All projects →</a>
+    </p>
+  </section>
+
+  <!-- about strip -->
+  <section class="section wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">About</p>
+        <h2 style="font-size:clamp(1.6rem,3vw,2.1rem);margin:0.6rem 0 1.2rem;">
+          I build things that run in production, not just notebooks.
+        </h2>
+        <p>{profile.bio[0]}</p>
+        <p>{profile.bio[1]}</p>
+        <p style="margin-top:1.2rem;">
+          <a href="/about">More about me →</a>
+        </p>
+      </div>
+      <div>
+        <div class="skill-group">
+          <h3>Core stack</h3>
+          <div class="chips">
+            {
+              [
+                "Python",
+                "LLMs / RAG",
+                "BigQuery",
+                "AWS · GCP · Azure",
+                "Kubernetes",
+                "FastAPI",
+              ].map((s) => <span class="chip">{s}</span>)
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

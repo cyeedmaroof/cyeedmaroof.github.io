@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+import profile from "../data/profile.json";
+import events from "../data/events.json";
+---
+
+<Layout
+  title={`Events — ${profile.name}`}
+  description="Talks, meetups, and community events hosted or organized."
+>
+  <section class="section wrap">
+    <div class="section-head">
+      <p class="eyebrow">Community</p>
+      <h2>Events I've hosted</h2>
+      <p class="lead">
+        Meetups, talks, and events I've organized or hosted.
+      </p>
+    </div>
+
+    {
+      events.length > 0 ? (
+        <div class="item-list">
+          {events.map((ev) => (
+            <div class="item">
+              <span class="item-date">{ev.date}</span>
+              <div>
+                <h3>{ev.url ? <a href={ev.url}>{ev.name} ↗</a> : ev.name}</h3>
+                <p class="item-sub">{ev.role}</p>
+                {ev.description && <p class="item-desc">{ev.description}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="empty">
+          <h3>No events added yet</h3>
+          <p>
+            Add entries to <code>src/data/events.json</code> — each needs
+            <code>name</code>, <code>role</code>, <code>date</code>, and an
+            optional <code>description</code> and <code>url</code>.
+          </p>
+        </div>
+      )
+    }
+  </section>
+</Layout>

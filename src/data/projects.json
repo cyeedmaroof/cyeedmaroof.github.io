@@ -1,0 +1,117 @@
+[
+  {
+    "slug": "sail-energy-forecasting",
+    "title": "SAIL × Baseline Energy Hackathon 2024",
+    "domain": "Time-series forecasting",
+    "year": "2024",
+    "featured": true,
+    "award": "1st place",
+    "summary": "A first-place hackathon solution that forecasts electricity consumption with a hybrid CNN-LSTM → XGBoost model.",
+    "tech": ["Python", "Jupyter", "CNN-LSTM", "XGBoost", "Time series"],
+    "repo": "https://github.com/cyeedmaroof/SAIL-x-Baseline-Energy-Hackathon-2024",
+    "case": {
+      "problem": "Forecast short-term electricity consumption from real energy data for the UiS × Baseline Energy challenge — under hackathon time pressure, in a two-person team.",
+      "data": "Provided electricity-consumption time-series dataset from the challenge.",
+      "approach": "A hybrid pipeline: a CNN-LSTM feature extractor to capture temporal and spatial structure in the load signal, feeding XGBoost to sharpen the final regression. Delivered end-to-end — data prep → model → evaluation — with reproducible code and the dataset.",
+      "results": [
+        "Won 1st place at the UiS SAIL × Baseline Energy Hackathon 2024 (two-person team, \"3M\").",
+        "Combined deep temporal feature extraction with gradient boosting for the final forecast."
+      ],
+      "next": [
+        "Publish the winning error metric (RMSE / MAPE vs. baseline) and a predicted-vs-actual plot.",
+        "Add the leaderboard score for context."
+      ]
+    }
+  },
+  {
+    "slug": "medical-emergency-agent",
+    "title": "Medical Emergency Agent",
+    "domain": "GenAI · Knowledge graphs",
+    "year": "2025",
+    "featured": true,
+    "summary": "An LLM agent that answers medical-emergency queries via retrieval over a property-graph knowledge store and call transcripts.",
+    "tech": ["Python", "RAG", "Knowledge graph", "Vector store", "LLM agent", "Gradio"],
+    "repo": "https://github.com/cyeedmaroof/Medical-emergency-agent",
+    "case": {
+      "problem": "Answer medical-emergency questions reliably, grounding the LLM in real call-transcript data rather than letting it hallucinate.",
+      "data": "A call-transcript corpus plus a property-graph knowledge store and a vector store for retrieval.",
+      "approach": "Retrieval-augmented generation over the knowledge graph and vector store, orchestrated as an LLM agent, with an interactive Gradio UI. Packaged as a reproducible Poetry project with a src/ layout.",
+      "results": [
+        "A working agent that queries a knowledge graph + vector store and answers through a Gradio interface.",
+        "Uses the modern GenAI stack — knowledge graphs, RAG, and agent orchestration — not just prompting."
+      ],
+      "next": [
+        "Document the use case, data provenance and privacy note, and add an architecture diagram.",
+        "Add a screenshot / GIF of the UI answering a query and a retrieval-accuracy metric."
+      ]
+    }
+  },
+  {
+    "slug": "atari-breakout-dqn",
+    "title": "Atari Breakout with DQN",
+    "domain": "Reinforcement learning",
+    "year": "2024",
+    "featured": true,
+    "summary": "A Deep Q-Network agent that learns to play Atari Breakout from pixels, built as a clean, modular, reproducible codebase.",
+    "tech": ["Python", "Deep Q-Network", "Reinforcement learning"],
+    "repo": "https://github.com/cyeedmaroof/Atari_breakout_with_DQN",
+    "case": {
+      "problem": "Train an agent to play Atari Breakout from raw pixel input using value-based reinforcement learning.",
+      "data": "The Atari Breakout environment (pixel frames as state).",
+      "approach": "A Deep Q-Network implemented from the ground up, structured as software rather than a single notebook — config-driven training, saved model checkpoints, and a standalone evaluation/inference script.",
+      "results": [
+        "A trained DQN agent on Breakout with a modular, reproducible codebase (config, models, utils).",
+        "Separate training and evaluation entry points with pinned dependencies."
+      ],
+      "next": [
+        "Fix the README (problem → approach → how to train/run).",
+        "Add a learning-curve plot and a GIF of the trained agent playing."
+      ]
+    }
+  },
+  {
+    "slug": "eciu-langgraph-agent",
+    "title": "ECIU AI Hackathon — LangGraph agent",
+    "domain": "Agentic LLMs",
+    "year": "2024",
+    "featured": false,
+    "summary": "An agentic LLM workflow modelling an interview + document-retrieval process as an explicit LangGraph StateGraph.",
+    "tech": ["Python", "LangGraph", "LangChain", "Pydantic"],
+    "repo": "https://github.com/cyeedmaroof/ECIU_AI_Hackathon",
+    "case": {
+      "problem": "Model an interview-and-document-retrieval process as a controllable, inspectable LLM workflow.",
+      "data": "Interview prompts and a document corpus for retrieval.",
+      "approach": "A LangGraph StateGraph with explicit nodes (greet, answer, retrieve) and conditional edges, using LangChain and Pydantic for structured node logic, with the compiled graph visualized.",
+      "results": [
+        "A compiled state-graph agent demonstrating controllable orchestration, not just prompting.",
+        "Structured, typed node logic with LangChain + Pydantic."
+      ],
+      "next": [
+        "Add a README framing the hackathon goal and a diagram of the graph.",
+        "Note whether the entry was ranked or awarded."
+      ]
+    }
+  },
+  {
+    "slug": "ipl-shiny-dashboard",
+    "title": "IPL Analysis — R Shiny dashboard",
+    "domain": "R · Dashboards",
+    "year": "2021",
+    "featured": false,
+    "summary": "An interactive R Shiny dashboard exploring Indian Premier League cricket data (2008–2019).",
+    "tech": ["R", "Shiny", "Data visualization"],
+    "repo": "https://github.com/cyeedmaroof/the-spark-foundation-IPL-analysis",
+    "case": {
+      "problem": "Make IPL cricket data explorable through an interactive dashboard (a Sparks Foundation internship task).",
+      "data": "IPL matches and ball-by-ball delivery data, 2008–2019.",
+      "approach": "An R Shiny app with interactive filtering and exploratory visualizations over the matches and deliveries datasets.",
+      "results": [
+        "An interactive dashboard covering IPL matches and ball-by-ball data across 2008–2019.",
+        "Evidence of R + Shiny + dashboarding breadth."
+      ],
+      "next": [
+        "Add screenshots and two or three concrete insights the dashboard surfaces."
+      ]
+    }
+  }
+]

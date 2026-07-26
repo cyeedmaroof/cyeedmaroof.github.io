@@ -1,0 +1,80 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import profile from "../../data/profile.json";
+import projects from "../../data/projects.json";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const c = project.case;
+---
+
+<Layout
+  title={`${project.title} — ${profile.name}`}
+  description={project.summary}
+>
+  <article class="section wrap">
+    <p class="back-link"><a href="/projects">← All projects</a></p>
+
+    <header class="study-head">
+      <p class="eyebrow">{project.domain}</p>
+      <h1>{project.title}</h1>
+      <div class="study-meta">
+        <span>{project.year}</span>
+        {project.award && <span>★ {project.award}</span>}
+        <a href={project.repo}>Repository ↗</a>
+      </div>
+    </header>
+
+    <div class="study-body">
+      <div class="study-block">
+        <h2>Problem</h2>
+        <p>{c.problem}</p>
+      </div>
+
+      <div class="study-block">
+        <h2>Data</h2>
+        <p>{c.data}</p>
+      </div>
+
+      <div class="study-block">
+        <h2>Approach</h2>
+        <p>{c.approach}</p>
+      </div>
+
+      <div class="study-block">
+        <h2>Results</h2>
+        <ul class="study-list">
+          {c.results.map((r) => <li>{r}</li>)}
+        </ul>
+      </div>
+
+      <div class="study-block">
+        <h2>What's next</h2>
+        <ul class="study-list">
+          {c.next.map((n) => <li>{n}</li>)}
+        </ul>
+        <p class="callout" style="margin-top:1rem;">
+          This is a living case study — result figures and metrics are being
+          added as the repositories are polished.
+        </p>
+      </div>
+
+      <div class="study-block">
+        <h2>Tech</h2>
+        <ul class="tags">
+          {project.tech.map((t) => <li class="tag">{t}</li>)}
+        </ul>
+      </div>
+
+      <p style="margin-top:1rem;">
+        <a class="btn btn-ghost" href={project.repo}>View code on GitHub ↗</a>
+      </p>
+    </div>
+  </article>
+</Layout>

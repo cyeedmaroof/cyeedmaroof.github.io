@@ -1,0 +1,71 @@
+---
+import Layout from "../layouts/Layout.astro";
+import profile from "../data/profile.json";
+---
+
+<Layout title={`About — ${profile.name}`} description={profile.positioning}>
+  <section class="section wrap">
+    <div class="section-head">
+      <p class="eyebrow">About</p>
+      <h2>{profile.name}</h2>
+      <p class="lead">{profile.positioning}</p>
+    </div>
+
+    <div class="split">
+      <div class="prose">
+        {profile.bio.map((para) => <p>{para}</p>)}
+
+        <p style="margin-top:1.5rem;">
+          <a class="btn btn-primary" href={profile.cv}>Download CV ↓</a>
+        </p>
+      </div>
+
+      <aside>
+        <div class="skill-group">
+          <h3>Currently looking for</h3>
+          <p style="color:var(--slate);font-size:0.95rem;">{profile.roles} roles in Norway.</p>
+        </div>
+
+        <div class="skill-group">
+          <h3>Languages</h3>
+          {
+            profile.languages.length > 0 ? (
+              <div class="chips">
+                {profile.languages.map((l) => (
+                  <span class="chip">{l.name} — {l.level}</span>
+                ))}
+              </div>
+            ) : (
+              <p style="color:var(--slate);font-size:0.9rem;">
+                To be added.
+              </p>
+            )
+          }
+        </div>
+
+        <div class="skill-group">
+          <h3>Find me</h3>
+          <div class="chips">
+            <a class="chip" href={profile.links.github}>GitHub ↗</a>
+            <a class="chip" href={profile.links.linkedin}>LinkedIn ↗</a>
+            <a class="chip" href={`mailto:${profile.email}`}>Email</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="section" style="padding-bottom:0;">
+      <p class="eyebrow" style="margin-bottom:1.5rem;">Skills</p>
+      {
+        Object.entries(profile.skills).map(([group, items]) => (
+          <div class="skill-group">
+            <h3>{group}</h3>
+            <div class="chips">
+              {items.map((s) => <span class="chip">{s}</span>)}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

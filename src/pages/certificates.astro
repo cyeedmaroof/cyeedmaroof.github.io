@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import profile from "../data/profile.json";
+import certificates from "../data/certificates.json";
+---
+
+<Layout
+  title={`Certificates — ${profile.name}`}
+  description="Certifications and qualifications."
+>
+  <section class="section wrap">
+    <div class="section-head">
+      <p class="eyebrow">Qualifications</p>
+      <h2>Certificates</h2>
+    </div>
+
+    {
+      certificates.length > 0 ? (
+        <div class="item-list">
+          {certificates.map((cert) => (
+            <div class="item">
+              <span class="item-date">{cert.date}</span>
+              <div>
+                <h3>
+                  {cert.url ? <a href={cert.url}>{cert.name} ↗</a> : cert.name}
+                </h3>
+                <p class="item-sub">{cert.issuer}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="empty">
+          <h3>No certificates added yet</h3>
+          <p>
+            Add entries to <code>src/data/certificates.json</code> — each needs
+            <code>name</code>, <code>issuer</code>, <code>date</code>, and an
+            optional <code>url</code>. They'll render here automatically.
+          </p>
+        </div>
+      )
+    }
+  </section>
+</Layout>

@@ -1,0 +1,36 @@
+---
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+
+const links = [
+  { href: "/projects", label: "Projects" },
+  { href: "/certificates", label: "Certificates" },
+  { href: "/events", label: "Events" },
+  { href: "/about", label: "About" },
+];
+---
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="#0F1B2D"></rect>
+        <polyline points="4,20 9,12 13,16 17,7" fill="none" stroke="#2457D6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+        <polyline points="17,7 21,14 25,10 28,17" fill="none" stroke="#0FA79A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 3"></polyline>
+        <circle cx="17" cy="7" r="2" fill="#E8A020"></circle>
+      </svg>
+      Maroof Mushtaq
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      {
+        links.map((l) => (
+          <a href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>
+            {l.label}
+          </a>
+        ))
+      }
+      <a class="nav-cv" href="/Maroof-Mushtaq-CV.pdf">CV ↓</a>
+    </nav>
+  </div>
+</header>
