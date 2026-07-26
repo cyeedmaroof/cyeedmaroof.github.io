@@ -1,0 +1,95 @@
+{
+  "work": [
+    {
+      "role": "Data Scientist",
+      "org": "Nivel AS",
+      "location": "Stavanger, Norway",
+      "start": "Mar 2025",
+      "end": "Present",
+      "current": true,
+      "bullets": [
+        "Built an analytics platform from scratch with Vue.js, Chart.js and Vite on a BigQuery backend.",
+        "Built an ETL pipeline API into Google Cloud / BigQuery and maintained the underlying data and databases.",
+        "Built, maintained and served Looker Studio reports for insights and reporting.",
+        "Manage scalable, robust infrastructure with Kubernetes, GitLab and AWS.",
+        "Integrated Geographic Information Systems (GIS) into production.",
+        "Built and deployed a BigQuery MCP server so non-technical colleagues can query the databases in plain language."
+      ]
+    },
+    {
+      "role": "ML / Python Developer",
+      "org": "Baseline Energy",
+      "location": "Stavanger, Norway",
+      "start": "Oct 2024",
+      "end": "Apr 2025",
+      "bullets": [
+        "Contributed to the Euroflex project — shifting electricity consumption for better grid reliability and cost-efficiency.",
+        "Built forecasting models to optimise energy-usage patterns.",
+        "Developed APIs and refactored legacy code for performance and maintainability."
+      ]
+    },
+    {
+      "role": "Teaching Assistant",
+      "org": "University of Stavanger",
+      "location": "Stavanger, Norway",
+      "start": "Aug 2023",
+      "end": "May 2025",
+      "bullets": [
+        "TA for Cloud Computing, Data-Intensive Systems, Introduction to Data Science and Databases — ran labs, supported students and graded assignments.",
+        "Worked across Spark/PySpark, Databricks, Hadoop, SQL, Kubernetes, ETL/ELT, AWS and OpenStack."
+      ]
+    },
+    {
+      "role": "Research Assistant",
+      "org": "University of Stavanger",
+      "location": "Stavanger, Norway",
+      "start": "Aug 2023",
+      "end": "Dec 2023",
+      "bullets": [
+        "Assisted PhD candidate Helleik Rosenvinge Syse with research on sustainable development in living spaces.",
+        "Analysed resident-generated data from the MyBox project using statistical and data-science methods."
+      ]
+    },
+    {
+      "role": "API & GIS Developer",
+      "org": "Hack the Climate — Nordic Edge",
+      "location": "Stavanger, Norway",
+      "start": "Dec 2023",
+      "end": "May 2024",
+      "bullets": [
+        "Member of Team Continua, a 5-person team tackling water pollution in Stavanger.",
+        "Developed LSTM and DDPG models to forecast agricultural nutrient runoff.",
+        "Collaborated with local authorities and the Nordic Edge team; stack: FastAPI, AWS, GIS, ML."
+      ]
+    },
+    {
+      "role": "Software Engineering Intern",
+      "org": "DNB",
+      "location": "Oslo, Norway",
+      "start": "Jun 2023",
+      "end": "Aug 2023",
+      "bullets": [
+        "Built a Streamlit dashboard to monitor the health of the Financial Management Data Refinery engine.",
+        "Designed and implemented a RESTful API for a mainframe-to-cloud migration project (Azure, Python, Snowflake, Pydantic)."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "M.Sc. Data Science",
+      "org": "University of Stavanger",
+      "location": "Stavanger, Norway",
+      "start": "2022",
+      "end": "2025",
+      "note": "Thesis: \"GRAG vs RAG — Limiting Hallucinations in LLMs with Knowledge Graphs\", with industry partner Laerdal Medical."
+    },
+    {
+      "degree": "B.E. Computer Science",
+      "org": "Nitte Meenakshi Institute of Technology",
+      "location": "Bangalore, India",
+      "start": "2017",
+      "end": "2021",
+      "note": "Thesis: \"Digital Passport and Visa Asset Management Using Private and Permissioned Blockchain\"."
+    }
+  ]
+}

@@ -829,6 +829,97 @@ a.chip:hover {
   border-radius: 4px;
 }
 
+/* ---------- timeline (experience / education) ---------- */
+.timeline {
+  position: relative;
+  list-style: none;
+  margin-left: 0.4rem;
+  padding-left: 1.9rem;
+  border-left: 2px solid var(--grid);
+  display: grid;
+  gap: 2.3rem;
+  max-width: 760px;
+}
+
+.tl-item {
+  position: relative;
+}
+
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: -1.9rem;
+  top: 0.4rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--slate);
+  transform: translateX(-50%);
+}
+
+.tl-item.current::before {
+  border-color: var(--indigo);
+  background: var(--indigo);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--indigo) 22%, transparent);
+}
+
+.tl-date {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  color: var(--slate);
+  margin-bottom: 0.3rem;
+}
+
+.tl-item.current .tl-date {
+  color: var(--indigo);
+}
+
+.tl-role {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.tl-org {
+  color: var(--slate);
+  font-weight: 500;
+}
+
+.tl-loc {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--slate);
+  margin-top: 0.15rem;
+}
+
+.tl-bullets {
+  margin-top: 0.7rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.tl-bullets li {
+  position: relative;
+  padding-left: 1.3rem;
+  color: var(--ink);
+  font-size: 0.96rem;
+  max-width: 68ch;
+}
+
+.tl-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--teal);
+}
+
 /* ---------- footer ---------- */
 .footer {
   border-top: 1px solid var(--ink-6);

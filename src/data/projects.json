@@ -9,6 +9,7 @@
     "summary": "A first-place hackathon solution that forecasts electricity consumption with a hybrid CNN-LSTM → XGBoost model.",
     "tech": ["Python", "Jupyter", "CNN-LSTM", "XGBoost", "Time series"],
     "repo": "https://github.com/cyeedmaroof/SAIL-x-Baseline-Energy-Hackathon-2024",
+    "eventUrl": "https://www.flexpartner.energy/no/sail-x-baselineenergy-hackathon-2024",
     "case": {
       "problem": "Forecast short-term electricity consumption from real energy data for the UiS × Baseline Energy challenge — under hackathon time pressure, in a two-person team.",
       "data": "Hourly electricity load paired with temperature — roughly 8,900 hours. I held out the final ~3 weeks as an untouched test set.",

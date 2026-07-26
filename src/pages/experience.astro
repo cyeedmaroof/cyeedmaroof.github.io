@@ -1,0 +1,61 @@
+---
+import Layout from "../layouts/Layout.astro";
+import profile from "../data/profile.json";
+import experience from "../data/experience.json";
+---
+
+<Layout
+  title={`Experience — ${profile.name}`}
+  description="Work experience and education — data science and software roles across Norway."
+>
+  <section class="section wrap">
+    <div class="section-head">
+      <p class="eyebrow">Career</p>
+      <h2>Experience</h2>
+      <p class="lead">Where I've worked and what I built there.</p>
+    </div>
+
+    <ol class="timeline">
+      {
+        experience.work.map((job) => (
+          <li class={job.current ? "tl-item current" : "tl-item"}>
+            <p class="tl-date">{job.start} – {job.end}</p>
+            <h3 class="tl-role">
+              {job.role} <span class="tl-org">· {job.org}</span>
+            </h3>
+            <p class="tl-loc">{job.location}</p>
+            <ul class="tl-bullets">
+              {job.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="section-head" style="margin-top: 4rem;">
+      <p class="eyebrow">Education</p>
+      <h2>Degrees</h2>
+    </div>
+
+    <ol class="timeline">
+      {
+        experience.education.map((ed) => (
+          <li class="tl-item">
+            <p class="tl-date">{ed.start} – {ed.end}</p>
+            <h3 class="tl-role">
+              {ed.degree} <span class="tl-org">· {ed.org}</span>
+            </h3>
+            <p class="tl-loc">{ed.location}</p>
+            {ed.note && (
+              <ul class="tl-bullets">
+                <li>{ed.note}</li>
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</Layout>
