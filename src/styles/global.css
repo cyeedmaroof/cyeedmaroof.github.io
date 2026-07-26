@@ -489,9 +489,10 @@ ul {
 
 .card-top {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.5rem 1rem;
 }
 
 .card-title {
