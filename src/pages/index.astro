@@ -86,4 +86,43 @@ const featured = projects.filter((p) => p.featured);
       </div>
     </div>
   </section>
+
+  <!-- off the clock -->
+  <section class="section wrap">
+    <div class="split">
+      <div class="prose">
+        <p class="eyebrow">Off the clock</p>
+        <h2 style="font-size:clamp(1.6rem,3vw,2.1rem);margin:0.6rem 0 1.2rem;">
+          There's a person behind the terminal.
+        </h2>
+        {profile.personal.map((p) => <p>{p}</p>)}
+      </div>
+      <div>
+        <div class="skill-group">
+          <h3>Into</h3>
+          <div class="chips">
+            {profile.interests.map((i) => <span class="chip">{i}</span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- say hello -->
+  <section class="section wrap">
+    <div class="hello">
+      <p class="eyebrow">Say hello</p>
+      <h2 style="font-size:clamp(1.7rem,3.2vw,2.3rem);margin:0.6rem 0 0.8rem;max-width:22ch;">
+        Let's talk — work, ideas, or a hike.
+      </h2>
+      <p class="lead" style="margin-top:0;margin-bottom:1.7rem;">
+        Hiring, building something interesting, or just curious? I'm always up for
+        meeting people who spark new directions.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href={profile.links.linkedin}>Message me on LinkedIn ↗</a>
+        <a class="btn btn-ghost" href={`mailto:${profile.email}`}>Email me</a>
+      </div>
+    </div>
+  </section>
 </Layout>

@@ -54,6 +54,16 @@ import profile from "../data/profile.json";
       </aside>
     </div>
 
+    <div class="section" style="padding-bottom:0;padding-top:clamp(1.5rem,3vw,2.5rem);">
+      <p class="eyebrow">Off the clock</p>
+      <div class="prose" style="margin-top:1rem;">
+        {profile.personal.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="chips" style="margin-top:1.2rem;">
+        {profile.interests.map((i) => <span class="chip">{i}</span>)}
+      </div>
+    </div>
+
     <div class="section" style="padding-bottom:0;">
       <p class="eyebrow" style="margin-bottom:1.5rem;">Skills</p>
       {

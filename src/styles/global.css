@@ -837,6 +837,15 @@ a.chip:hover {
   border-radius: 4px;
 }
 
+/* ---------- say hello ---------- */
+.hello {
+  border: 1px solid var(--grid);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: clamp(2rem, 5vw, 3.5rem);
+  max-width: 720px;
+}
+
 /* ---------- events ---------- */
 .events {
   display: grid;

@@ -15,6 +15,11 @@
     "My M.Sc. thesis — in partnership with Laerdal Medical — looked at limiting LLM hallucinations with knowledge graphs (GRAG vs RAG). Before Nivel I built energy-forecasting models at Baseline Energy, engineered data at DNB, and taught cloud computing and data-intensive systems as a TA at UiS.",
     "I'm comfortable across the modern data stack and with both technical and non-technical stakeholders."
   ],
+  "personal": [
+    "Outside work you'll usually find me outdoors — I hike a lot, I climb, and I dance, and I've recently started learning sand volleyball.",
+    "I'm at my best around people whose curiosity feeds mine and pushes me to grow in more than one direction. I love picking up new things and setting myself challenges — on a screen or off it."
+  ],
+  "interests": ["Hiking", "Climbing", "Dancing", "Sand volleyball"],
   "languages": [],
   "_languages_note": "TODO: add languages + level, e.g. { \"name\": \"English\", \"level\": \"Fluent\" }",
   "skills": {
