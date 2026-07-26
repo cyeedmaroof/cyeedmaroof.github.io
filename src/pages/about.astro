@@ -23,7 +23,7 @@ import profile from "../data/profile.json";
       <aside>
         <div class="skill-group">
           <h3>Currently looking for</h3>
-          <p style="color:var(--slate);font-size:0.95rem;">{profile.roles} roles in Norway.</p>
+          <p style="color:var(--slate);font-size:0.95rem;">{profile.roles} roles.</p>
         </div>
 
         <div class="skill-group">
@@ -32,7 +32,7 @@ import profile from "../data/profile.json";
             profile.languages.length > 0 ? (
               <div class="chips">
                 {profile.languages.map((l) => (
-                  <span class="chip">{l.name} — {l.level}</span>
+                  <span class="chip">{l.level ? `${l.name} — ${l.level}` : l.name}</span>
                 ))}
               </div>
             ) : (

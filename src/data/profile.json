@@ -20,7 +20,7 @@
     "I'm at my best around people whose curiosity feeds mine and pushes me to grow in more than one direction. I love picking up new things and setting myself challenges — on a screen or off it."
   ],
   "interests": ["Hiking", "Climbing", "Dancing", "Sand volleyball"],
-  "languages": [],
+  "languages": [{ "name": "English", "level": "Fluent" }],
   "_languages_note": "TODO: add languages + level, e.g. { \"name\": \"English\", \"level\": \"Fluent\" }",
   "skills": {
     "AI / ML": ["Python", "Machine Learning", "Deep Learning", "NLP", "LLMs", "RAG / GRAG", "Knowledge Graphs", "TensorFlow", "LSTM", "DDPG"],
