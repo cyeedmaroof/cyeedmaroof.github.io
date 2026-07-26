@@ -100,10 +100,13 @@
     "year": "2024",
     "featured": false,
     "team": true,
+    "award": "1st place",
     "credit": "Team project · Team Continua, Nordic Edge",
     "summary": "A 5-person team forecasting agricultural nutrient runoff to fight water pollution in the Stavanger–Setesdal region.",
     "tech": ["Python", "LSTM", "DDPG", "FastAPI", "AWS", "GIS"],
     "repo": "https://github.com/achak1987/thc_stavanger",
+    "eventUrl": "https://www.linkedin.com/posts/hacktheclimate-nordicedge-sustainability-share-7135240682926931968-b7--/",
+    "eventLabel": "Announcement",
     "case": {
       "problem": "Reduce water pollution in the Stavanger–Setesdal region by predicting nutrient runoff from agricultural areas — the Nordic Edge \"Hack the Climate\" challenge, tackled by the 5-person Team Continua.",
       "data": "Environmental and geographic data for the region.",

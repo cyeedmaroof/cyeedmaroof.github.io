@@ -29,7 +29,7 @@ const c = project.case;
         {project.award && <span>★ {project.award}</span>}
         {project.credit && <span>{project.credit}</span>}
         <a href={project.repo}>Repository ↗</a>
-        {project.eventUrl && <a href={project.eventUrl}>Hackathon ↗</a>}
+        {project.eventUrl && <a href={project.eventUrl}>{project.eventLabel || "Hackathon"} ↗</a>}
       </div>
     </header>
 

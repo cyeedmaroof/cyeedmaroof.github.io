@@ -551,6 +551,13 @@ ul {
   color: var(--indigo-ink);
 }
 
+.card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;

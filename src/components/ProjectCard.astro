@@ -18,13 +18,10 @@ const { project } = Astro.props;
 <article class="card">
   <div class="card-top">
     <p class="eyebrow">{project.domain}</p>
-    {
-      project.award ? (
-        <span class="badge badge-award">★ {project.award}</span>
-      ) : (
-        project.team && <span class="badge badge-role">Team</span>
-      )
-    }
+    <div class="card-badges">
+      {project.award && <span class="badge badge-award">★ {project.award}</span>}
+      {project.team && <span class="badge badge-role">Team</span>}
+    </div>
   </div>
   <h3 class="card-title">
     <a class="card-link" href={`/projects/${project.slug}`}>{project.title}</a>
