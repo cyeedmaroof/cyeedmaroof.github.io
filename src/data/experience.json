@@ -5,7 +5,7 @@
       "org": "Nivel AS",
       "location": "Stavanger, Norway",
       "start": "Mar 2025",
-      "end": "Present",
+      "end": "Aug 2026",
       "current": true,
       "bullets": [
         "Built an analytics platform from scratch with Vue.js, Chart.js and Vite on a BigQuery backend.",
