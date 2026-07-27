@@ -50,7 +50,12 @@ import experience from "../data/experience.json";
             <p class="tl-loc">{ed.location}</p>
             {ed.note && (
               <ul class="tl-bullets">
-                <li>{ed.note}</li>
+                <li>
+                  {ed.note}
+                  {ed.noteUrl && (
+                    <> — <a href={ed.noteUrl}>published paper ↗</a></>
+                  )}
+                </li>
               </ul>
             )}
           </li>
