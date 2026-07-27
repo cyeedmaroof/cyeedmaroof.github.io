@@ -22,4 +22,26 @@ import projects from "../../data/projects.json";
       {projects.map((project) => <ProjectCard project={project} />)}
     </div>
   </section>
+
+  <!-- website: Auroville Film Institute (embedded open, not a tile) -->
+  <section class="section wrap">
+    <div class="section-head">
+      <p class="eyebrow">Website</p>
+      <h2>Website I built for Auroville Film Institute</h2>
+      <p class="lead">
+        A live site I designed and built for the institute — its diploma
+        programme, workshops and courses.
+      </p>
+    </div>
+    <div class="demo-embed">
+      <iframe
+        src="https://filminstitute.auroville.org/"
+        title="Auroville Film Institute — live site"
+        loading="lazy"
+      />
+    </div>
+    <p class="back-link" style="margin-top:0.6rem;">
+      <a href="https://filminstitute.auroville.org/">Open in a new tab ↗</a>
+    </p>
+  </section>
 </Layout>
