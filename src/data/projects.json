@@ -143,6 +143,20 @@
     }
   },
   {
+    "slug": "auroville-film-institute",
+    "title": "Auroville Film Institute",
+    "domain": "Web · Design & build",
+    "featured": false,
+    "summary": "A live WordPress website for the Auroville Film Institute — its diploma programme, workshops and cinema-centric courses.",
+    "tech": ["WordPress", "Web design"],
+    "demo": "https://filminstitute.auroville.org/",
+    "demoHeading": "Live site",
+    "case": {
+      "problem": "The Auroville Film Institute needed a public website to present its programmes — including the 1-year PG Diploma in Open Space Documentary Arts — along with workshops, news and how to apply.",
+      "approach": "I built and shipped the institute's website on WordPress; it's live in production and serving the current intake. Explore it below."
+    }
+  },
+  {
     "slug": "ipl-shiny-dashboard",
     "title": "IPL Analysis — R Shiny dashboard",
     "domain": "R · Dashboards",

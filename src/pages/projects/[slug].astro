@@ -25,10 +25,10 @@ const c = project.case;
       <p class="eyebrow">{project.domain}</p>
       <h1>{project.title}</h1>
       <div class="study-meta">
-        <span>{project.year}</span>
+        {project.year && <span>{project.year}</span>}
         {project.award && <span>★ {project.award}</span>}
         {project.credit && <span>{project.credit}</span>}
-        <a href={project.repo}>Repository ↗</a>
+        {project.repo && <a href={project.repo}>Repository ↗</a>}
         {project.eventUrl && <a href={project.eventUrl}>{project.eventLabel || "Hackathon"} ↗</a>}
       </div>
     </header>
@@ -39,10 +39,14 @@ const c = project.case;
         <p>{c.problem}</p>
       </div>
 
-      <div class="study-block">
-        <h2>Data</h2>
-        <p>{c.data}</p>
-      </div>
+      {
+        c.data && (
+          <div class="study-block">
+            <h2>Data</h2>
+            <p>{c.data}</p>
+          </div>
+        )
+      }
 
       <div class="study-block">
         <h2>Approach</h2>
@@ -112,17 +116,17 @@ const c = project.case;
       {
         project.demo && (
           <div class="study-block">
-            <h2>Live demo</h2>
+            <h2>{project.demoHeading || "Live demo"}</h2>
             <div class="demo-embed">
               <iframe
                 src={project.demo}
-                title={`${project.title} — live demo`}
+                title={`${project.title} — ${project.demoHeading || "live demo"}`}
                 loading="lazy"
                 allow="fullscreen"
               />
             </div>
             <p class="back-link" style="margin-top:0.6rem;">
-              Hosted on Hugging Face Spaces · <a href={project.demo}>open in a new tab ↗</a>
+              <a href={project.demo}>Open in a new tab ↗</a>
             </p>
           </div>
         )
@@ -152,9 +156,13 @@ const c = project.case;
         </ul>
       </div>
 
-      <p style="margin-top:1rem;">
-        <a class="btn btn-ghost" href={project.repo}>View code on GitHub ↗</a>
-      </p>
+      {
+        project.repo && (
+          <p style="margin-top:1rem;">
+            <a class="btn btn-ghost" href={project.repo}>View code on GitHub ↗</a>
+          </p>
+        )
+      }
     </div>
   </article>
 </Layout>

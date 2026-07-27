@@ -558,6 +558,11 @@ ul {
   justify-content: flex-end;
 }
 
+.badge-live {
+  background: color-mix(in srgb, var(--teal) 16%, transparent);
+  color: var(--teal);
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;

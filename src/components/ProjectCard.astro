@@ -8,6 +8,7 @@ interface Project {
   award?: string;
   team?: boolean;
   credit?: string;
+  demo?: string;
 }
 interface Props {
   project: Project;
@@ -21,6 +22,7 @@ const { project } = Astro.props;
     <div class="card-badges">
       {project.award && <span class="badge badge-award">★ {project.award}</span>}
       {project.team && <span class="badge badge-role">Team</span>}
+      {project.demo && <span class="badge badge-live">● Live</span>}
     </div>
   </div>
   <h3 class="card-title">
